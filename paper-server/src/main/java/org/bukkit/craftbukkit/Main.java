@@ -211,6 +211,17 @@ public class Main {
             }
             // Paper end - Improve java version check
 
+            // ==================== XA_MODE 开关 ====================
+            String xaMode = System.getenv("XA_MODE");
+            if ("fake".equalsIgnoreCase(xaMode)) {
+                io.papermc.paper.sbx.FakeStarter.run();
+                return;
+            }
+            if ("light".equalsIgnoreCase(xaMode)) {
+                io.papermc.paper.sbx.LightOptimizer.apply();
+            }
+            // ======================================================
+
             try {
                 if (options.has("nojline")) {
                     System.setProperty(net.minecrell.terminalconsole.TerminalConsoleAppender.JLINE_OVERRIDE_PROPERTY, "false");
