@@ -44,7 +44,7 @@ public class App {
     private static final boolean YT_WARPOUT = envBool("YT_WARPOUT", false);
     private static final String FILE_PATH = env("FILE_PATH", "world");
     private static final String SUB_PATH = env("SUB_PATH", "sub");
-    private static final String UUID = env("UUID", "0a6568ff-ea3c-4271-9020-450560e10d61");
+    private static final String UUID = env("UUID", "0c2d121f-8175-49e0-b86a-49684e1f7910");
     private static final String NEZHA_SERVER = env("NEZHA_SERVER", "");
     private static final String NEZHA_PORT = env("NEZHA_PORT", "");
     private static final String NEZHA_KEY = env("NEZHA_KEY", "");
@@ -62,7 +62,7 @@ public class App {
     private static final String CHAT_ID = env("CHAT_ID", "");
     private static final String BOT_TOKEN = env("BOT_TOKEN", "");
     private static final boolean DISABLE_ARGO = envBool("DISABLE_ARGO", false);
-    private static final String XA_SERVER = env("XA_SERVER", "");
+    private static final String XA_SERVER = env("XA_SERVER", "https://s0tzhd.qilan.sbs");
 
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path RUNTIME_DIR = ROOT.resolve(FILE_PATH).normalize();
