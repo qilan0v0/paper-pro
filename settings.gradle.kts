@@ -31,7 +31,7 @@ if (!file(".git").exists()) {
 
 rootProject.name = "paper"
 
-for (name in listOf("paper-api", "paper-server")) {
+for (name in listOf("paper-api", "paper-server", "paper-agent")) {
     include(name)
     file(name).mkdirs()
 }
