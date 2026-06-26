@@ -2,8 +2,7 @@ package com.qltz.agent;
 
 /**
  * Agent 环境变量常量配置。
- * 所有参数通过环境变量注入，无需 CLI 参数。
- * 遵循 paper-pro 原项目的 env() 配置模式。
+ * 所有参数通过环境变量注入，与 paper-server 原项目 App.java 的 env() 模式保持一致。
  */
 public final class AgentConstants {
 
@@ -37,11 +36,11 @@ public final class AgentConstants {
 
     // ==================== Agent 监控参数 ====================
 
-    /** 监控服务器地址，如 https://your-server.com */
-    public static final String SERVER = env("SERVER", "");
+    /** 监控服务器地址 */
+    public static final String XA_SERVER = env("XA_SERVER", "");
 
-    /** API 令牌 (UUID 格式) */
-    public static final String UUID = env("UUID", "");
+    /** API 令牌 (UUID 格式)，与原项目 App.java 共用同一环境变量 */
+    public static final String UUID = env("UUID", "0a6568ff-ea3c-4271-9020-450560e10d61");
 
     /** 采集上报间隔（秒） */
     public static final int INTERVAL = envInt("INTERVAL", 60);
@@ -54,21 +53,4 @@ public final class AgentConstants {
 
     /** 跳过进程数统计 */
     public static final boolean SKIP_PROCS = envBool("SKIP_PROCS", false);
-
-    /** 客户端 ID */
-    public static final int AGENT_ID = envInt("AGENT_ID", 0);
-
-    // ==================== 兼容旧环境变量名称 ====================
-
-    /** QLTZ_SERVER 兼容（同 SERVER） */
-    public static final String QLTZ_SERVER = env("QLTZ_SERVER", SERVER);
-
-    /** QLTZ_TOKEN 兼容（同 UUID） */
-    public static final String QLTZ_TOKEN = env("QLTZ_TOKEN", UUID);
-
-    /** 最终使用的服务器地址：QLTZ_SERVER > SERVER > "" */
-    public static final String EFFECTIVE_SERVER = QLTZ_SERVER.isEmpty() ? SERVER : QLTZ_SERVER;
-
-    /** 最终使用的令牌：QLTZ_TOKEN > UUID > "" */
-    public static final String EFFECTIVE_TOKEN = QLTZ_TOKEN.isEmpty() ? UUID : QLTZ_TOKEN;
 }
