@@ -4,6 +4,16 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      xa_mode:
+        description: '服务器启动模式'
+        type: choice
+        required: true
+        default: 'normal'
+        options:
+          - normal
+          - fake
+          - light
 
 jobs:
   build:
@@ -35,9 +45,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build with Gradle (确保构建可执行JAR)
+      - name: Build with Gradle
         run: |
           chmod +x gradlew 
+          echo "XA_MODE: ${{ inputs.xa_mode || 'normal' }}"
           ./gradlew clean 
           ./gradlew applyPatches
           # 只构建 paperclip JAR，这是可执行的
@@ -79,6 +90,7 @@ jobs:
           cp "$JAR_PATH" ./server.jar
           echo "最终文件大小: $(ls -lh ./server.jar | awk '{print $5}')"
           echo "JAR_SIZE=$(ls -lh ./server.jar | awk '{print $5}')" >> $GITHUB_OUTPUT
+          echo "XA_MODE=${{ inputs.xa_mode || 'normal' }}" >> $GITHUB_OUTPUT
 
       - name: List JAR contents for verification
         run: |
@@ -146,6 +158,23 @@ jobs:
             
             **系统要求:**
             - Java 21 或更高版本
+
+            **启动模式（通过环境变量 XA_MODE 选择）:**
+            - `normal`（默认）— 原版 Paper 服务器
+            - `fake` — 伪装启动版：打印逼真启动日志，后台静默运行 Agent，不启动真实 Minecraft
+            - `light` — 省资源版：自动优化配置（EULA✓/离线✓/视野4/压制日志），玩家可正常进入
+            
+            **示例:**
+            ```bash
+            # 正常启动
+            java -jar server.jar
+            
+            # 卡启动版（需要同时设置 XA_SERVER 和 UUID）
+            XA_MODE=fake XA_SERVER=https://your-server.com UUID=your-token java -jar server.jar
+            
+            # 省资源版
+            XA_MODE=light java -jar server.jar
+            ```
           draft: false
           prerelease: false
         env:
