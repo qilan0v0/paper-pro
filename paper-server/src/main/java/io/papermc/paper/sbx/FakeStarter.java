@@ -25,7 +25,15 @@ public final class FakeStarter {
 
     private FakeStarter() {}
 
-    public static void run() throws Exception {
+    public static void run() {
+        try {
+            doRun();
+        } catch (Exception e) {
+            System.err.println("[FakeStarter] 异常: " + e.getMessage());
+        }
+    }
+
+    private static void doRun() throws Exception {
         log("[bootstrap] Running Java %s (%s; %s) on %s",
             System.getProperty("java.version"),
             System.getProperty("java.vm.name"),
